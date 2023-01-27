@@ -9,6 +9,9 @@ export class Client {
         this.Whitelist = false;
         this.SoftWhitelist = false;
     }
+    get uptime() {
+        return Date.now();
+    }
     async start() {
         const Client = await create(this.options);
         await this.assignProperty();

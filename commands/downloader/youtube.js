@@ -6,15 +6,15 @@ export async function run(client, message) {
     if (!ytdl.validateURL(args[0]))
         return client.clientInstances.sendText(message.chatId, "Please provide a youtube url");
     try {
-        let info = await ytdl.getBasicInfo(args[0]);
-        let title = info.videoDetails.title;
-        let bufs = [];
-        let stream = ytdl(args[0], { filter: format => format.container === 'mp4' });
-        stream.on('data', (chunk) => {
+        const info = await ytdl.getBasicInfo(args[0]);
+        const title = info.videoDetails.title;
+        const bufs = [];
+        const stream = ytdl(args[0], { filter: (format) => format.container === "mp4" });
+        stream.on("data", (chunk) => {
             bufs.push(chunk);
         });
-        stream.on('end', () => {
-            let buf = Buffer.concat(bufs);
+        stream.on("end", () => {
+            const buf = Buffer.concat(bufs);
             client.clientInstances?.sendImage(message.chatId, bufferToDataUrl("video/mp4", buf), title + ".mp4", "here u go");
         });
     }
