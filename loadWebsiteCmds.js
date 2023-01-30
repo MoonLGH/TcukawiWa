@@ -5,5 +5,5 @@ LoadCommands().then((cmds) => {
     commands.map((cmd) => {
         cmd.filepath = `src/commands/${cmd.category}/${cmd.filepath}`;
     });
-    writeFileSync("output/cmd.json", JSON.stringify(commands));
+    writeFileSync("dist/cmd.json", JSON.stringify(commands));
 });
