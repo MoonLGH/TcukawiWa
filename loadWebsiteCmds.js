@@ -1,9 +1,8 @@
-import { LoadCommands } from "./util/handle.js";
+import { LoadCommandsNoCollection } from "./util/handle.js";
 import { writeFileSync } from "fs";
-LoadCommands().then((cmds) => {
-    const commands = cmds.toJSON();
-    commands.map((cmd) => {
+LoadCommandsNoCollection().then((cmds) => {
+    cmds.map((cmd) => {
         cmd.filepath = `src/commands/${cmd.category}/${cmd.filepath}`;
     });
-    writeFileSync("dist/cmd.json", JSON.stringify(commands));
+    writeFileSync("dist/cmd.json", JSON.stringify(cmds));
 });
