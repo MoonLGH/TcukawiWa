@@ -10,7 +10,6 @@ export const client = new Client({
     popup: true,
     licenseKey: settings.Lisences,
     useChrome: settings.useChrome || false,
-    chromiumArgs: ["--no-sandbox"],
 }, {
     mongoUrl: settings.MongoURL,
 });
