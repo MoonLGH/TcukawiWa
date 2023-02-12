@@ -3,7 +3,7 @@ const enka = new EnkaNetwork({ language: "EN", caching: true });
 export async function run(client, message) {
     const { args } = client.parseMessage(message);
     const get_data_shin = await enkashin(Number(args[0]));
-    const teks = `informasi tentang id genshin ini:\n\nickname: *${get_data_shin.nickname}*\nSignature: *${get_data_shin.signature}*\level: *${get_data_shin.level}*\nameCard: *${get_data_shin.nameCard}*\achievements: *${get_data_shin.achievements}*\abyssFloor: *${get_data_shin.abyssFloor}*\abyssLevel: *${get_data_shin.abyssLevel}*`.trim();
+    const teks = `informasi tentang id genshin ini:\nnickname: *${get_data_shin.nickname}*\nSignature: *${get_data_shin.signature}*\nlevel: *${get_data_shin.level}*\nnameCard: *${get_data_shin.nameCard}*\nachievements: *${get_data_shin.achievements}*\nabyssFloor: *${get_data_shin.abyssFloor}*\nabyssLevel: *${get_data_shin.abyssLevel}*`.trim();
     client.clientInstances?.sendText(message.chatId, teks);
 }
 async function enkashin(id) {
@@ -20,3 +20,5 @@ async function enkashin(id) {
     };
     return enka_result;
 }
+export const name = "enka";
+export const description = "informasi genshinID";
