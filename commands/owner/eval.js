@@ -52,9 +52,9 @@ export async function run(client, message) {
             await fetch("https://hastebin.com/documents", {
                 method: "POST",
                 body: output,
-                headers: { "Content-Type": "text/plain" },
+                headers: { "Content-Type": "text/plain", "Authorization": "Bearer " + process.env.HasteBinToken },
             }).then((res) => res.json())
-                .then((json) => bin = "https://hastebin.com/" + json.key + ".js")
+                .then((json) => bin = "https://hastebin.com/share/" + json.key)
                 .catch(() => null);
         }
         const str = output.length > 1000 ? bin : output;
