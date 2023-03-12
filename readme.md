@@ -30,6 +30,7 @@ Installing TcukawiWa is easy, simply follow these steps:
    - MongoURL - the MongoDB URL to connect to your database
    - OPENAI_API_KEY - the OpenAI API key obtained from https://openai.com/api/ to use the #ai command
    - Sauce_API - the SauceNao API key obtained from https://saucenao.com/user.php to use the #sauce command
+   - HasteBinToken - The api token to Hastebin for uploading 1000 > letter #eval (optional)
 5. Start the bot by running `npm run start`
 
 ## Technology Stack
