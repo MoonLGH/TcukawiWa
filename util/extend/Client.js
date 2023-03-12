@@ -8,6 +8,19 @@ export class Client {
         this.options = options;
         this.Whitelist = false;
         this.SoftWhitelist = false;
+        this.semiOwner = [];
+    }
+    addSemiOwner(id) {
+        if (!this.semiOwner) {
+            this.semiOwner = [];
+        }
+        this.semiOwner.push(id);
+    }
+    removeSemiOwner(id) {
+        if (!this.semiOwner) {
+            this.semiOwner = [];
+        }
+        this.semiOwner = this.semiOwner.filter((e) => e !== id);
     }
     get uptime() {
         return Date.now();
