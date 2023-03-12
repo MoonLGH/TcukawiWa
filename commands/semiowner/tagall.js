@@ -1,7 +1,14 @@
 export function run(client, message) {
-    if (!message.fromMe || (client.semiOwner && client.semiOwner.includes(message.sender.id)))
-        return client.clientInstances.sendText(message.chatId, "You must be semi owner to use this command");
-    client.clientInstances?.sendReplyWithMentions(message.chatId, `${getName(message.sender)} Has Called You`, message.id, true, message.chat.groupMetadata.participants.map((p) => p.id));
+    // check if the message is from a semi owner
+    if (client.semiOwner?.includes(message.sender.id) || message.fromMe) {
+        if (!message.isGroupMsg) {
+            return client.clientInstances.sendText(message.chatId, "This command only works on group chats");
+        }
+        client.clientInstances?.sendReplyWithMentions(message.chatId, `${getName(message.sender)} Has Called You`, message.id, true, message.chat.groupMetadata.participants.map((p) => p.id));
+    }
+    else {
+        return client.clientInstances.sendText(message.chatId, "You Need to be semi owner or higher");
+    }
 }
 export const name = "tagall";
 function getName(contact) {
