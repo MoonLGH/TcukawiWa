@@ -10,12 +10,18 @@ export function run(client:Client, message:Message) {
     const runtimeMinutes = Math.floor(runtimeSeconds % 3600 / 60);
     const runtimeSecondsFinal = runtimeSeconds % 60;
     
-    const messageText = `≻ Hello ${getName(message.sender)}
+    const messageText = `
+    ≻ Hello ${getName(message.sender)}
+    
     ≻ Date: ${now.tz(timezone).format('YYYY-MM-DD')}
     ≻ Time: ${now.tz(timezone).format('HH:mm:ss')}
     ≻ Runtime: ${runtimeDays} days, ${runtimeHours} hours, ${runtimeMinutes} minutes, and ${runtimeSecondsFinal} seconds.
+    
     ≻ Note: Times are relative to ${timezone}.
-    ≻ For a list of available commands, please visit https://tcukawi.tech/Tcukawi-WebCommands/commands/`;
+    
+    ≻ For a list of available commands, please visit https://tcukawi.tech/Tcukawi-WebCommands/commands/
+    ≻ For the Bot source code, is opensource on https://github.com/MoonLGH/TcukawiWa, feel free to contribute
+    `;
     
     client.clientInstances!.sendText(message.chatId, messageText);
 }
