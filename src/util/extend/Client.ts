@@ -1,5 +1,5 @@
 import Collection from "@discordjs/collection";
-import {ConfigObject, AdvancedConfig, create, Client as WaClient, Message} from "@open-wa/wa-automate";
+import {ConfigObject, AdvancedConfig, create, Client as WaClient, Message, ContactId} from "@open-wa/wa-automate";
 import {prefix} from "../settings.js";
 import {LoadCommands, commandInterface} from "../handle.js";
 import {connect} from "../db/Mongo.js";
@@ -15,6 +15,7 @@ export class Client {
   MongoUrl?: string;
   Whitelist?: boolean;
   SoftWhitelist?: boolean;
+  semiOwner?: ContactId[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   secret: any;
   constructor(options?:ConfigObject|AdvancedConfig, AdvanceOptions?:MoreOptions) {
@@ -22,8 +23,22 @@ export class Client {
     this.options = options;
     this.Whitelist = false;
     this.SoftWhitelist = false;
+    this.semiOwner = [];
   }
 
+  addSemiOwner(id:ContactId) {
+    if (!this.semiOwner) {
+      this.semiOwner = [];
+    }
+    this.semiOwner.push(id);
+  }
+
+  removeSemiOwner(id:ContactId) {
+    if (!this.semiOwner) {
+      this.semiOwner = [];
+    }
+    this.semiOwner = this.semiOwner.filter((e) => e !== id);
+  }
 
   public get uptime() : number {
     return Date.now();
