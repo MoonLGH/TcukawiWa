@@ -1,7 +1,7 @@
 import moment from "moment-timezone";
 export function run(client, message) {
     const now = moment();
-    const timezone = 'GMT+7';
+    const timezone = 'Asia/Jakarta';
     const runtimeSeconds = Math.floor(process.uptime());
     const runtimeDays = Math.floor(runtimeSeconds / 86400);
     const runtimeHours = Math.floor(runtimeSeconds % 86400 / 3600);
