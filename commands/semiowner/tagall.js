@@ -1,6 +1,6 @@
-export function run(client, message) {
-    // check if the message is from a semi owner
-    if (client.semiOwner?.includes(message.sender.id) || message.fromMe) {
+export async function run(client, message) {
+    const semiowner = await client.semiOwnerList();
+    if (semiowner.includes(message.sender.id) || message.fromMe) {
         if (!message.isGroupMsg) {
             return client.clientInstances.sendText(message.chatId, "This command only works on group chats");
         }

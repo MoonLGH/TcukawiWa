@@ -1,8 +1,37 @@
+import { model } from "../../util/db/model/semiowner";
 export function run(client, message) {
     if (!message.fromMe)
         return client.clientInstances.sendText(message.chatId, "No");
     if (message.mentionedJidList.length < 1) {
         return client.clientInstances.sendText(message.chatId, "Please mention the user");
+    }
+    if (client.MongoUrl) {
+        const mentioned = message.mentionedJidList[0];
+        if (message.body.includes("-del")) {
+            model.findOneAndDelete({ numberId: mentioned }).then((res) => {
+                if (res) {
+                    return client.clientInstances.sendText(message.chatId, "Removed from semi owner list Database");
+                }
+                else {
+                    return client.clientInstances.sendText(message.chatId, "User is not in the semi owner list");
+                }
+            });
+        }
+        else {
+            model.findOne({ numberId: mentioned }).then((res) => {
+                if (res) {
+                    return client.clientInstances.sendText(message.chatId, "User is already in the semi owner list");
+                }
+                else {
+                    const newSemi = new model({
+                        numberId: mentioned,
+                    });
+                    newSemi.save().then(() => {
+                        return client.clientInstances.sendText(message.chatId, "Added to semi owner list Database");
+                    });
+                }
+            });
+        }
     }
     if (message.body.includes("-del")) {
         const mentioned = message.mentionedJidList[0];
@@ -16,10 +45,3 @@ export function run(client, message) {
     }
 }
 export const name = "semi";
-function getName(contact) {
-    const { pushname, formattedName, verifiedName, name } = contact;
-    if (contact.isMe) {
-        return "Yang Mulia";
-    }
-    return name || pushname || verifiedName || formattedName;
-}

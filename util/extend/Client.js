@@ -2,6 +2,7 @@ import { create } from "@open-wa/wa-automate";
 import { prefix } from "../settings.js";
 import { LoadCommands } from "../handle.js";
 import { connect } from "../db/Mongo.js";
+import { model } from "../../util/db/model/semiowner";
 export class Client {
     constructor(options, AdvanceOptions) {
         this.MongoUrl = AdvanceOptions?.mongoUrl;
@@ -9,6 +10,20 @@ export class Client {
         this.Whitelist = false;
         this.SoftWhitelist = false;
         this.semiOwner = [];
+    }
+    async semiOwnerList() {
+        // combine both semiOwner and semiOwner from database
+        if (this.MongoUrl) {
+            const semi = await model.find();
+            const semiId = semi.map((e) => e.numberId);
+            if (this.semiOwner) {
+                this.semiOwner = [...this.semiOwner, ...semiId];
+            }
+            else {
+                this.semiOwner = semiId;
+            }
+        }
+        return this.semiOwner;
     }
     addSemiOwner(id) {
         if (!this.semiOwner) {
