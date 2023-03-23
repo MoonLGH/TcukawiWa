@@ -3,6 +3,7 @@ import {ConfigObject, AdvancedConfig, create, Client as WaClient, Message, Conta
 import {prefix} from "../settings.js";
 import {LoadCommands, commandInterface} from "../handle.js";
 import {connect} from "../db/Mongo.js";
+import {model} from "../../util/db/model/semiowner";
 
 export interface MoreOptions {
   mongoUrl?:string
@@ -15,7 +16,7 @@ export class Client {
   MongoUrl?: string;
   Whitelist?: boolean;
   SoftWhitelist?: boolean;
-  semiOwner?: ContactId[];
+  semiOwner?: ContactId[] | string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   secret: any;
   constructor(options?:ConfigObject|AdvancedConfig, AdvanceOptions?:MoreOptions) {
@@ -26,6 +27,19 @@ export class Client {
     this.semiOwner = [];
   }
 
+  async semiOwnerList() {
+    // combine both semiOwner and semiOwner from database
+    if (this.MongoUrl) {
+      const semi = await model.find();
+      const semiId = semi.map((e) => e.numberId);
+      if (this.semiOwner) {
+        this.semiOwner = [...this.semiOwner, ...semiId];
+      } else {
+        this.semiOwner = semiId;
+      }
+    }
+    return this.semiOwner;
+  }
   addSemiOwner(id:ContactId) {
     if (!this.semiOwner) {
       this.semiOwner = [];
