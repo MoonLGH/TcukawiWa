@@ -2,7 +2,7 @@ import { create } from "@open-wa/wa-automate";
 import { prefix } from "../settings.js";
 import { LoadCommands } from "../handle.js";
 import { connect } from "../db/Mongo.js";
-import { model } from "../../util/db/model/semiowner";
+import { model } from "../../util/db/model/semiowner.js";
 export class Client {
     constructor(options, AdvanceOptions) {
         this.MongoUrl = AdvanceOptions?.mongoUrl;
