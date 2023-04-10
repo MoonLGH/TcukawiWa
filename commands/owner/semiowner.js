@@ -1,4 +1,4 @@
-import { model } from "../../util/db/model/semiowner";
+import { model } from "../../util/db/model/semiowner.js";
 export function run(client, message) {
     if (!message.fromMe)
         return client.clientInstances.sendText(message.chatId, "No");
