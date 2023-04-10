@@ -3,7 +3,7 @@ import {ConfigObject, AdvancedConfig, create, Client as WaClient, Message, Conta
 import {prefix} from "../settings.js";
 import {LoadCommands, commandInterface} from "../handle.js";
 import {connect} from "../db/Mongo.js";
-import {model} from "../../util/db/model/semiowner";
+import {model} from "../../util/db/model/semiowner.js";
 
 export interface MoreOptions {
   mongoUrl?:string
