@@ -1,5 +1,5 @@
 import {Contact, ContactId, Message} from "@open-wa/wa-automate";
-import {Client} from "../../util/extend/Client";
+import {Client} from "../../util/extend/Client.js";
 export async function run(client: Client, message: Message) {
   const semiowner = await client.semiOwnerList()!;
   if (semiowner!.includes(message.sender.id) || message.fromMe) {

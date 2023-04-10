@@ -1,6 +1,7 @@
 import {Message} from "@open-wa/wa-automate";
-import {Client} from "../../util/extend/Client";
-import {model} from "../../util/db/model/semiowner";
+import {Client} from "../../util/extend/Client.js";
+import {model} from "../../util/db/model/semiowner.js";
+
 export function run(client:Client, message:Message) {
   if (!message.fromMe) return client.clientInstances!.sendText(message.chatId, "No");
   if (message.mentionedJidList.length < 1) {
