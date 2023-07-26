@@ -9,7 +9,7 @@ export function run(client, message) {
     const runtimeMinutes = Math.floor(runtimeSeconds % 3600 / 60);
     const runtimeSecondsFinal = runtimeSeconds % 60;
     let messageText = `
-    ≻ Hello ${getName(message.sender)}
+    ≻ Hello ${getName(message)}
     
     ≻ Date: ${now.tz(timezone).format("YYYY-MM-DD")}
     ≻ Time: ${now.tz(timezone).format("HH:mm:ss")}
@@ -34,9 +34,9 @@ export function run(client, message) {
 }
 export const name = "uptime";
 export const alias = ["info", "botInfo"];
-function getName(contact) {
-    const { pushname, formattedName, verifiedName, name } = contact;
-    if (contact.isMe) {
+function getName(msg) {
+    const { pushname, formattedName, verifiedName, name } = msg.sender;
+    if (msg.fromMe) {
         return "Yang Mulia";
     }
     return name || pushname || verifiedName || formattedName;

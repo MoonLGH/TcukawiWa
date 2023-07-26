@@ -31,7 +31,7 @@ export async function run(client, message) {
                     avatar: true,
                     from: {
                         id: 1,
-                        name: getName(quotedMsg.sender),
+                        name: getName(quotedMsg),
                         photo: {
                             url: pic,
                         },
@@ -79,7 +79,7 @@ export async function run(client, message) {
                     avatar: true,
                     from: {
                         id: 1,
-                        name: getName(message.sender),
+                        name: getName(message),
                         photo: {
                             url: pic,
                         },
@@ -100,7 +100,6 @@ export async function run(client, message) {
     }
 }
 async function upload(b64) {
-    console.log(b64);
     try {
         const res = await axios.post("http://20.222.32.83:7000/upload", { image: b64 });
         return `http://20.222.32.83:7000/file/file/${res.data.id}.png`;
@@ -112,9 +111,9 @@ async function upload(b64) {
 export const name = "quote";
 export const description = "quote a message to be a sticker";
 export const alias = ["qc"];
-function getName(contact) {
-    const { pushname, formattedName, verifiedName, name } = contact;
-    if (contact.isMe) {
+function getName(msg) {
+    const { pushname, formattedName, verifiedName, name } = msg.sender;
+    if (msg.fromMe) {
         return "Yang Mulia";
     }
     return name || pushname || verifiedName || formattedName;
