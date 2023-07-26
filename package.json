@@ -9,7 +9,9 @@
     "build": "npm run clean && tsc",
     "start": "npm run build && node dist/index.js",
     "loadCmd": "npm run build && node dist/loadWebsiteCmds.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint" : "eslint . --ext .ts",
+    "lint:fix" : "eslint . --ext .ts --fix"
   },
   "repository": {
     "type": "git",

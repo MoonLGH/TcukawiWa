@@ -6,7 +6,7 @@ export async function run(client: Client, message: Message) {
     if (!message.isGroupMsg) {
       return client.clientInstances!.sendText(message.chatId, "This command only works on group chats");
     }
-    client.clientInstances?.sendReplyWithMentions(message.chatId, `${getName(message.sender)} Has Called You`, message.id, true, (message.chat.groupMetadata.participants.map((p) => p.id) as unknown as ContactId[]));
+    client.clientInstances?.sendReplyWithMentions(message.chatId, `${getName(message)} Has Called You`, message.id, true, (message.chat.groupMetadata.participants.map((p) => p.id) as unknown as ContactId[]));
   } else {
     return client.clientInstances!.sendText(message.chatId, "You Need to be semi owner or higher");
   }
@@ -15,9 +15,9 @@ export async function run(client: Client, message: Message) {
 
 export const name = "tagall";
 
-function getName(contact: Contact) {
-  const {pushname, formattedName, verifiedName, name} = contact;
-  if (contact.isMe) {
+function getName(msg: Message) {
+  const {pushname, formattedName, verifiedName, name} = msg.sender as Contact;
+  if (msg.fromMe) {
     return "Yang Mulia";
   }
   return name || pushname || verifiedName || formattedName;

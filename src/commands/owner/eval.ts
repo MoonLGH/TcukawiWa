@@ -55,7 +55,7 @@ export async function run(client:Client, message:Message) {
       await fetch("https://hastebin.com/documents", {
         method: "POST",
         body: output,
-        headers: {"Content-Type": "text/plain","Authorization":"Bearer "+process.env.HasteBinToken},
+        headers: {"Content-Type": "text/plain", "Authorization": "Bearer "+process.env.HasteBinToken},
       }).then((res) => res.json())
           .then((json) => bin = "https://hastebin.com/share/" + json.key)
           .catch(() => null);
