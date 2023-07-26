@@ -6,16 +6,14 @@ export async function run(client, message) {
     if (!ytdl.validateURL(args[0]))
         return client.clientInstances.sendText(message.chatId, "Please provide a youtube url");
     try {
-        let info = await ytdl.getBasicInfo(args[0]);
-        let title = info.videoDetails.title;
-        let bufs = [];
+        const bufs = [];
         // let stream = ytdl audionly
-        let stream = ytdl(args[0], { filter: "audioonly" });
-        stream.on('data', (chunk) => {
+        const stream = ytdl(args[0], { filter: "audioonly" });
+        stream.on("data", (chunk) => {
             bufs.push(chunk);
         });
-        stream.on('end', () => {
-            let buf = Buffer.concat(bufs);
+        stream.on("end", () => {
+            const buf = Buffer.concat(bufs);
             client.clientInstances?.sendPtt(message.chatId, bufferToDataUrl("audio/mp3", buf), message.id);
         });
     }

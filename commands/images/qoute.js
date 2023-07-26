@@ -6,9 +6,9 @@ export async function run(client, message) {
     if (quotedMsg) {
         let pic;
         try {
-            let b64 = await client.clientInstances.downloadFileWithCredentials(quotedMsg.sender.profilePicThumbObj.imgFull).catch(() => `https://i0.wp.com/telegra.ph/file/134ccbbd0dfc434a910ab.png`);
+            const b64 = await client.clientInstances.downloadFileWithCredentials(quotedMsg.sender.profilePicThumbObj.imgFull).catch(() => "http://www.gravatar.com/avatar/?d=mp");
             console.log(b64);
-            if (b64 !== `https://i0.wp.com/telegra.ph/file/134ccbbd0dfc434a910ab.png`) {
+            if (b64 !== "http://www.gravatar.com/avatar/?d=mp") {
                 pic = await upload(b64);
             }
             else {
@@ -16,9 +16,9 @@ export async function run(client, message) {
             }
         }
         catch (err) {
-            pic = `https://i0.wp.com/telegra.ph/file/134ccbbd0dfc434a910ab.png`;
+            pic = "http://www.gravatar.com/avatar/?d=mp";
         }
-        let jsonstik = {
+        const jsonstik = {
             type: "quote",
             format: "webp",
             backgroundColor: "#FFFFFF",
@@ -33,7 +33,7 @@ export async function run(client, message) {
                         id: 1,
                         name: getName(quotedMsg.sender),
                         photo: {
-                            url: pic
+                            url: pic,
                         },
                     },
                     text: quotedMsg.text,
@@ -42,20 +42,20 @@ export async function run(client, message) {
             ],
         };
         console.log(jsonstik.messages[0].from.photo);
-        let res = await axios.post("https://bot.lyo.su/quote/generate", jsonstik, {
+        const res = await axios.post("https://bot.lyo.su/quote/generate", jsonstik, {
             headers: { "Content-Type": "application/json" },
         });
         const buffer = Buffer.from(res.data.result.image, "base64");
         client.clientInstances?.sendImageAsSticker(message.chatId, buffer, {
-            keepScale: true
+            keepScale: true,
         });
     }
     else {
         let pic;
         try {
-            let b64 = await client.clientInstances.downloadFileWithCredentials(message.sender.profilePicThumbObj.imgFull).catch(() => `https://i0.wp.com/telegra.ph/file/134ccbbd0dfc434a910ab.png`);
+            const b64 = await client.clientInstances.downloadFileWithCredentials(message.sender.profilePicThumbObj.imgFull).catch(() => "http://www.gravatar.com/avatar/?d=mp");
             console.log(b64);
-            if (b64 !== `https://i0.wp.com/telegra.ph/file/134ccbbd0dfc434a910ab.png`) {
+            if (b64 !== "http://www.gravatar.com/avatar/?d=mp") {
                 pic = await upload(b64);
             }
             else {
@@ -63,10 +63,10 @@ export async function run(client, message) {
             }
         }
         catch (err) {
-            pic = `https://i0.wp.com/telegra.ph/file/134ccbbd0dfc434a910ab.png`;
+            pic = "http://www.gravatar.com/avatar/?d=mp";
         }
-        let { args } = client.parseMessage(message);
-        let jsonstik = {
+        const { args } = client.parseMessage(message);
+        const jsonstik = {
             type: "quote",
             format: "webp",
             backgroundColor: "#FFFFFF",
@@ -90,23 +90,23 @@ export async function run(client, message) {
             ],
         };
         console.log(jsonstik.messages[0].from.photo);
-        let res = await axios.post("https://bot.lyo.su/quote/generate", jsonstik, {
+        const res = await axios.post("https://bot.lyo.su/quote/generate", jsonstik, {
             headers: { "Content-Type": "application/json" },
         });
         const buffer = Buffer.from(res.data.result.image, "base64");
         client.clientInstances?.sendImageAsSticker(message.chatId, buffer, {
-            keepScale: true
+            keepScale: true,
         });
     }
 }
-async function upload(b64, tries) {
+async function upload(b64) {
     console.log(b64);
     try {
-        let res = await axios.post('https://image-production-a0af.up.railway.app/upload', { image: b64 });
-        return `https://image-production-a0af.up.railway.app/file/file/${res.data.id}.png`;
+        const res = await axios.post("http://20.222.32.83:7000/upload", { image: b64 });
+        return `http://20.222.32.83:7000/file/file/${res.data.id}.png`;
     }
     catch (err) {
-        return `https://i0.wp.com/telegra.ph/file/134ccbbd0dfc434a910ab.png`;
+        return "http://www.gravatar.com/avatar/?d=mp";
     }
 }
 export const name = "quote";
